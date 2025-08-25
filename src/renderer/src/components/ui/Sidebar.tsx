@@ -1,28 +1,23 @@
-import { useFiles } from '@renderer/hooks/useFiles'
-import Directory from '../Directory'
-import Sidemenu from './Sidemenu'
-import Sidesearch from './Sidesearch'
 import { Layout } from 'antd'
+import { useContext } from 'react'
+import { ImmersiveModeContext } from '@renderer/context/app-context'
+import SideVerticalMenu from './SideVerticalMenu'
+import SideMainMenu from './SideMainMenu'
 
 const { Sider } = Layout
 
-interface SidebarProps {
-  immersiveMode: boolean
-}
-
-export default function Sidebar({ immersiveMode }: SidebarProps): React.ReactElement {
-  const { files, createFile, createFolder, setSelectedPath } = useFiles()
+export default function Sidebar(): React.ReactElement {
+  const { immersiveMode } = useContext(ImmersiveModeContext)
 
   if (immersiveMode) {
     return <></>
   }
 
   return (
-    <Sider width={320}>
-      <div className="bg-zinc-900 shadow flex flex-col h-full">
-        <Sidemenu createFile={createFile} createFolder={createFolder} />
-        <Sidesearch />
-        <Directory files={files} setSelectedPath={setSelectedPath} />
+    <Sider width={360}>
+      <div className="flex h-full">
+        <SideVerticalMenu />
+        <SideMainMenu />
       </div>
     </Sider>
   )

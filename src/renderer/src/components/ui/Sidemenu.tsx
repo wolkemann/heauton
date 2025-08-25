@@ -10,9 +10,9 @@ interface SidemenuProps {
 
 export default function Sidemenu({ createFile, createFolder }: SidemenuProps): React.ReactElement {
   return (
-    <div className="p-1 bg-zinc-900 border-b shadow flex justify-end">
+    <div className="p-1 bg-zinc-900 border-b shadow flex gap-1 justify-end">
       <Button
-        size="large"
+        size="small"
         title="New Entry"
         type="text"
         icon={<FileAddOutlined />}
@@ -23,7 +23,7 @@ export default function Sidemenu({ createFile, createFolder }: SidemenuProps): R
         trigger="click"
         destroyOnHidden
       >
-        <Button size="large" title="New Folder" type="text" icon={<FolderAddOutlined />} />
+        <Button size="small" title="New Folder" type="text" icon={<FolderAddOutlined />} />
       </Popover>
     </div>
   )
