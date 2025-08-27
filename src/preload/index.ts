@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { FileNode, IPC } from '../shared/ipc-types'
-import { fileObject } from '../shared/shared-types'
+import { fileObject, Meditations, MeditationsSectionExtract } from '../shared/shared-types'
 
 // Custom APIs for renderer
 const api = {
@@ -15,7 +15,10 @@ const api = {
     ipcRenderer.invoke(IPC.CREATE_FOLDER, newFolder ? { newFolder } : undefined) as Promise<void>,
 
   fetchFiles: (searchTerm?: string) =>
-    ipcRenderer.invoke(IPC.FETCH_FILES, { searchTerm }) as Promise<fileObject[]>
+    ipcRenderer.invoke(IPC.FETCH_FILES, { searchTerm }) as Promise<fileObject[]>,
+  fetchMeditations: () => ipcRenderer.invoke(IPC.FETCH_MEDITATIONS) as Promise<Meditations>,
+  fetchMeditationsExtract: () =>
+    ipcRenderer.invoke(IPC.FETCH_MEDITATIONS_EXTRACT) as Promise<MeditationsSectionExtract>
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

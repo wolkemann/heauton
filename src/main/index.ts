@@ -2,9 +2,15 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import meditationsBook from '../../resources/the-meditations.html?asset'
 import { fetchApiPayload, fileApiPayload, IPC, IPCEvents } from '../shared/ipc-types'
 import { createFile, ensureDir, readDirTree, readFile, writeFile } from './file-system'
-import { parseFileContentToMetaData, transformFileNodeToFlatArray } from './lib/helpers'
+import {
+  getMeditationsRandomSection,
+  parseFileContentToMetaData,
+  parseMeditations,
+  transformFileNodeToFlatArray
+} from './lib/helpers'
 import { fileObject } from '../shared/shared-types'
 
 export const DEFAULT_ROOT = join(app.getPath('documents'), 'heauton-journal')
@@ -143,4 +149,19 @@ ipcMain.handle(IPC.FETCH_FILES, async (_e, payload: fetchApiPayload) => {
   })
 
   return fileObjects
+})
+
+ipcMain.handle(IPC.FETCH_MEDITATIONS, async () => {
+  const book = await readFile(meditationsBook)
+  const meditations = parseMeditations(book)
+
+  return meditations
+})
+
+ipcMain.handle(IPC.FETCH_MEDITATIONS_EXTRACT, async () => {
+  const book = await readFile(meditationsBook)
+  const meditations = parseMeditations(book)
+  const section = getMeditationsRandomSection(meditations)
+
+  return section
 })

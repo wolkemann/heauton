@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MeditationsRouteImport } from './routes/meditations'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReadNoteIdRouteImport } from './routes/read.$noteId'
 import { Route as EditNoteIdRouteImport } from './routes/edit.$noteId'
 
+const MeditationsRoute = MeditationsRouteImport.update({
+  id: '/meditations',
+  path: '/meditations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +37,47 @@ const EditNoteIdRoute = EditNoteIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/meditations': typeof MeditationsRoute
   '/edit/$noteId': typeof EditNoteIdRoute
   '/read/$noteId': typeof ReadNoteIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/meditations': typeof MeditationsRoute
   '/edit/$noteId': typeof EditNoteIdRoute
   '/read/$noteId': typeof ReadNoteIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/meditations': typeof MeditationsRoute
   '/edit/$noteId': typeof EditNoteIdRoute
   '/read/$noteId': typeof ReadNoteIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/edit/$noteId' | '/read/$noteId'
+  fullPaths: '/' | '/meditations' | '/edit/$noteId' | '/read/$noteId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/edit/$noteId' | '/read/$noteId'
-  id: '__root__' | '/' | '/edit/$noteId' | '/read/$noteId'
+  to: '/' | '/meditations' | '/edit/$noteId' | '/read/$noteId'
+  id: '__root__' | '/' | '/meditations' | '/edit/$noteId' | '/read/$noteId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MeditationsRoute: typeof MeditationsRoute
   EditNoteIdRoute: typeof EditNoteIdRoute
   ReadNoteIdRoute: typeof ReadNoteIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/meditations': {
+      id: '/meditations'
+      path: '/meditations'
+      fullPath: '/meditations'
+      preLoaderRoute: typeof MeditationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MeditationsRoute: MeditationsRoute,
   EditNoteIdRoute: EditNoteIdRoute,
   ReadNoteIdRoute: ReadNoteIdRoute,
 }
