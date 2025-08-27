@@ -1,4 +1,4 @@
-import { HomeOutlined } from '@ant-design/icons'
+import { BookOutlined, HomeOutlined } from '@ant-design/icons'
 import { useNavigate } from '@tanstack/react-router'
 import { Button } from 'antd'
 
@@ -12,6 +12,13 @@ export default function SideVerticalMenu(): React.ReactElement {
         size="large"
         icon={<HomeOutlined />}
         onClick={() => navigate({ to: '/' })}
+      />
+      <Button
+        title="Go to the Front page"
+        type="text"
+        size="large"
+        icon={<BookOutlined />}
+        onClick={() => navigate({ to: '/meditations' })}
       />
     </div>
   )

@@ -15,7 +15,9 @@ export const IPC = {
   WRITE_FILE: 'fs:write',
   CREATE_FILE: 'fs:create',
   CREATE_FOLDER: 'fs:create-folder',
-  FETCH_FILES: 'api:fetch-file'
+  FETCH_FILES: 'api:fetch-file',
+  FETCH_MEDITATIONS: 'api:fetch-meditations',
+  FETCH_MEDITATIONS_EXTRACT: 'api:fetch-meditations-extract'
 } as const
 
 export enum IPCEvents {
